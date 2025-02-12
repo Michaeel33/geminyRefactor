@@ -1,12 +1,21 @@
 package com.example.eshopRefactor.Dao;
 
 
-import com.example.eshopRefactor.Dto.FakturaDto;
-import com.example.eshopRefactor.Dto.PersonalData;
+import com.example.eshopRefactor.Dto.*;
+
+import java.util.List;
 
 public interface FakturaDao {
 
     PersonalData getPersonalData(long perId);
 
     FakturaDto getFaktura(long perId);
+
+    PersonalDocuments getPersonalDoc(long perId);
+
+    List<Orders> getOrdersForPerId(long perId);
+
+    List<Items> getItemsForOrder(String orderNo);
+
+
 }
