@@ -65,19 +65,16 @@ public class FakturaDaoImpl extends NamedParameterJdbcDaoSupport implements Fakt
         return jdbcTemplate.query(SQL_ITEMS_FOR_ORDER, itemMapper::mapItemsForOrder, orderNo);
     }
 
+
+
     @Override
-    public FakturaDto getFaktura(long perId) {
+    public FakturaDto getFakturaHistory(long perId) {
+        //  Logika presunutá do FakturaServiceImpl
         FakturaDto fakturaDto = new FakturaDto();
         fakturaDto.setPersId(perId);
         fakturaDto.setPersonalData(getPersonalData(perId));
         fakturaDto.setPersonalDocuments(getPersonalDoc(perId));
-
-        List<Orders> ordersList = getOrdersForPerId(perId);
-        for (Orders order : ordersList) {
-            order.setOrderedItems(getItemsForOrder(order.getOrderNumber()));
-        }
-        fakturaDto.setOrdersList(ordersList);
-
         return fakturaDto;
     }
+
 }

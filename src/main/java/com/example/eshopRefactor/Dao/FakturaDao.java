@@ -9,7 +9,7 @@ public interface FakturaDao {
 
     PersonalData getPersonalData(long perId);
 
-    FakturaDto getFaktura(long perId);
+    FakturaDto getFakturaHistory(long perId);
 
     PersonalDocuments getPersonalDoc(long perId);
 

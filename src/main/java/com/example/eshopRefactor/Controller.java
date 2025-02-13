@@ -20,7 +20,7 @@ public class Controller {
 
     @GetMapping("/{perId}")
     public FakturaDto getFaktura(@PathVariable long perId) {
-        return fakturaService.getFaktura(perId);
+        return fakturaService.getFakturaHistory(perId);
     }
 
 
