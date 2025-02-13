@@ -29,10 +29,13 @@ public class FakturaServiceImpl  implements FakturaService {
     private final PersonalDocumentsDaoImpl personalDocumentsDao;
 
 
-    // Metóda na získanie faktúry
+
     @Override
     public FakturaDto getFakturaHistory(long perId) {
-        FakturaDto fakturaDto = fakturaDao.getFakturaHistory(perId);
+        FakturaDto fakturaDto = new FakturaDto();
+        fakturaDto.setPersId(perId);
+        fakturaDto.setPersonalData(fakturaDao.getPersonalData(perId));
+        fakturaDto.setPersonalDocuments(fakturaDao.getPersonalDoc(perId));
 
         List<Orders> ordersList = fakturaDao.getOrdersForPerId(perId);
         for (Orders order : ordersList) {

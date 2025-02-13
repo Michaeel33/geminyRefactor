@@ -67,15 +67,4 @@ public class FakturaDaoImpl extends NamedParameterJdbcDaoSupport implements Fakt
 
 
 
-    @Override
-    public FakturaDto getFakturaHistory(long perId) {
-        //  Logika presunutá do FakturaServiceImpl
-        FakturaDto fakturaDto = new FakturaDto();
-        fakturaDto.setPersId(perId);
-        fakturaDto.setPersonalData(getPersonalData(perId));
-        fakturaDto.setPersonalDocuments(getPersonalDoc(perId));
-        return fakturaDto;
-    }
-
-
 }
