@@ -11,7 +11,7 @@ public class PersonalDocumentsMapper {
 
     public PersonalDocuments mapPersonalDocuments(ResultSet rs, int rowNum) throws SQLException {
         PersonalDocuments document = new PersonalDocuments();
-        document.setObcianskypreukaz(rs.getString("obcianskypreukaz"));
+        document.setCustomerId(rs.getString("obcianskypreukaz"));
         document.setVerified(rs.getInt("isVerified") == 1);
         document.setCountryName(rs.getString("countryName"));
         return document;

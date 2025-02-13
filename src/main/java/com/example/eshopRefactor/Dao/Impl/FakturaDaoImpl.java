@@ -77,4 +77,5 @@ public class FakturaDaoImpl extends NamedParameterJdbcDaoSupport implements Fakt
         return fakturaDto;
     }
 
+
 }

@@ -9,4 +9,8 @@ public interface FakturaService {
 
     FakturaDto getFakturaHistory(long perId);
 
+    FakturaDto getFakturaHistoryByCustomerName(String firstName, String lastName);
+
+    FakturaDto getFakturaHistoryByCustomerId(String customerId);
+
 }
