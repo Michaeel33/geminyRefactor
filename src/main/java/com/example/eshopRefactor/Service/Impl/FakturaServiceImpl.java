@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -53,11 +54,11 @@ public class FakturaServiceImpl  implements FakturaService {
 
 
     @Override
-    public FakturaDto getFakturaHistory(FakturaRequest fakturaRequest) {
+    public List<FakturaDto> getFakturaHistory(FakturaRequest fakturaRequest) {
         String paramForSearch = fakturaRequest.getParamForSearch();
         String value = fakturaRequest.getValue();
 
-        Long perId = null;
+        List<FakturaDto> fakturaDtoList = new ArrayList<>(); // Zoznam pre viacero FakturaDto
 
         if ("name".equalsIgnoreCase(paramForSearch)) {
             String[] names = value.split(" ");
@@ -68,19 +69,28 @@ public class FakturaServiceImpl  implements FakturaService {
             if (personalDataList.isEmpty()) {
                 throw new CustomerNotFoundException("Zákazník s menom: " + value + " nebol nájdený.");
             }
-            perId = personalDataList.get(0).getPerId();
+
+            for (PersonalData personalData : personalDataList) { // Prechádzame cez všetky nájdené záznamy
+                long perId = personalData.getPerId();
+                FakturaDto fakturaDto = getFakturaHistory(perId); // Vytvoríme FakturaDto pre každý záznam
+                fakturaDtoList.add(fakturaDto);
+            }
 
         } else if ("customerId".equalsIgnoreCase(paramForSearch)) {
-            perId = personalDocumentsDao.getPerIdByCustomerId(value);
+            Long perId = personalDocumentsDao.getPerIdByCustomerId(value);
+            if (perId == null) {
+                throw new CustomerNotFoundException("Zákazník s ID: " + value + " nebol nájdený.");
+            }
+            FakturaDto fakturaDto = getFakturaHistory(perId);
+            fakturaDtoList.add(fakturaDto); // Pridáme jeden nájdený záznam
+
         } else {
             throw new IllegalArgumentException("Neplatný parameter pre vyhľadávanie: " + paramForSearch);
         }
 
-        if (perId == null) {
-            throw new CustomerNotFoundException("Zákazník s ID: " + value + " nebol nájdený."); // Pre customerId
-        }
 
-        return getFakturaHistory(perId); // Voláme metódu z FakturaDao
+
+        return fakturaDtoList; // Vrátime zoznam FakturaDto
     }
 
 }
